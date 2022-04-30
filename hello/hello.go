@@ -3,6 +3,7 @@ package hello
 const spanish = "Spanish"
 const french = "French"
 
+// Say hello by passing in `name` and `language`.
 func Hello(name string, language string) string {
 	if name == "" {
 		name = "World"
@@ -10,6 +11,7 @@ func Hello(name string, language string) string {
 	return greetingPrefix(language) + name
 }
 
+// Generate greeting prefix based on provided language.
 func greetingPrefix(language string) (prefix string) {
 	switch language {
 	case spanish:
