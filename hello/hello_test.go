@@ -1,6 +1,21 @@
-package main
+package hello
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
+
+func ExampleHello() {
+	hello := Hello("Pierre", french)
+	fmt.Println(hello)
+	// Output: Bonjour, Pierre
+}
+
+func ExampleHello_default() {
+	hello := Hello("", "")
+	fmt.Println(hello)
+	// Output: Hello, World
+}
 
 func TestHello(t *testing.T) {
 
