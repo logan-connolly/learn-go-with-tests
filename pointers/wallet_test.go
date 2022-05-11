@@ -1,10 +1,13 @@
 package pointers
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestWallet(t *testing.T) {
 
-	checkBalance := func(t testing.TB, got Stringer, want Stringer) {
+	checkBalance := func(t testing.TB, got, want fmt.Stringer) {
 		t.Helper()
 		if got != want {
 			t.Errorf("got %s want %s", got, want)
