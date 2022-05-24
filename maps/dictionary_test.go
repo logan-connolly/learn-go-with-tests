@@ -28,8 +28,9 @@ func TestSearch(t *testing.T) {
 func TestAdd(t *testing.T) {
 	t.Run("add word", func(t *testing.T) {
 		d := Dictionary{}
-		d.Add(TEST_WORD, TEST_DEFINITION)
+		err := d.Add(TEST_WORD, TEST_DEFINITION)
 
+		assertError(t, err, nil)
 		assertDefinition(t, d, TEST_WORD, TEST_DEFINITION)
 	})
 
@@ -42,6 +43,28 @@ func TestAdd(t *testing.T) {
 		}
 
 		assertError(t, err, ErrorWordExists)
+	})
+}
+
+func TestUpdate(t *testing.T) {
+	t.Run("update word", func(t *testing.T) {
+		new_test_definition := "My new definition"
+		d := Dictionary{TEST_WORD: TEST_DEFINITION}
+		err := d.Update(TEST_WORD, new_test_definition)
+
+		assertError(t, err, nil)
+		assertDefinition(t, d, TEST_WORD, new_test_definition)
+	})
+
+	t.Run("target word does not exist", func(t *testing.T) {
+		d := Dictionary{TEST_WORD: TEST_DEFINITION}
+		err := d.Update("badword", "this will not be updated")
+
+		if err == nil {
+			t.Error("Expected to get an error")
+		}
+
+		assertError(t, err, ErrorWordDoesNotExist)
 	})
 }
 
