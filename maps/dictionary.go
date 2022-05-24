@@ -41,3 +41,12 @@ func (d Dictionary) Update(word, definition string) error {
 	d[word] = definition
 	return nil
 }
+
+func (d Dictionary) Delete(word string) error {
+	if _, err := d.Search(word); err != nil {
+		return ErrorWordDoesNotExist
+	}
+
+	delete(d, word)
+	return nil
+}
