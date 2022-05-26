@@ -71,22 +71,10 @@ func TestUpdate(t *testing.T) {
 func TestDelete(t *testing.T) {
 	t.Run("delete word", func(t *testing.T) {
 		d := Dictionary{TEST_WORD: TEST_DEFINITION}
-		err := d.Delete(TEST_WORD)
+		d.Delete(TEST_WORD)
 
-		assertError(t, err, nil)
-		_, err = d.Search(TEST_WORD)
+		_, err := d.Search(TEST_WORD)
 		assertError(t, err, ErrorWordNotFound)
-	})
-
-	t.Run("target word does not exist", func(t *testing.T) {
-		d := Dictionary{TEST_WORD: TEST_DEFINITION}
-		err := d.Delete("badword")
-
-		if err == nil {
-			t.Error("Expected to get an error")
-		}
-
-		assertError(t, err, ErrorWordDoesNotExist)
 	})
 }
 
