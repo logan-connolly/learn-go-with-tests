@@ -3,25 +3,26 @@ package main
 import (
 	"bytes"
 	"testing"
+	"time"
 )
 
-type SpySleeper struct {
-	Calls int
-}
+var spyCounter = 0
 
-func (s *SpySleeper) Sleep() {
-	s.Calls++
+func mockSleep(d time.Duration) {
+	spyCounter += 1
 }
 
 func TestCountdownClock(t *testing.T) {
 	buffer := &bytes.Buffer{}
-	sleeper := &SpySleeper{}
-	clock := CountdownClock{
-		writer:         buffer,
-		sleeper:        sleeper,
-		startingNumber: 3,
+	sleeper := &ConfigurableSleeper{
+		iterations: 3,
+		duration:   time.Second * 1,
+		sleep:      mockSleep,
 	}
-
+	clock := CountdownClock{
+		writer:  buffer,
+		sleeper: *sleeper,
+	}
 	clock.Start()
 
 	got := buffer.String()
@@ -31,7 +32,7 @@ func TestCountdownClock(t *testing.T) {
 		t.Errorf("got %q want %q", got, want)
 	}
 
-	if sleeper.Calls != 4 {
-		t.Errorf("expected 4 calls got %q", sleeper.Calls)
+	if spyCounter != 3 {
+		t.Errorf("expected 3 calls got %v", spyCounter)
 	}
 }

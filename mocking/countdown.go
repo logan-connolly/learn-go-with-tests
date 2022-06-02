@@ -7,37 +7,39 @@ import (
 	"time"
 )
 
-type Sleeper interface {
-	Sleep()
+type ConfigurableSleeper struct {
+	iterations int
+	duration   time.Duration
+	sleep      func(time.Duration)
 }
 
-type DefaultSleeper struct{}
-
-func (s *DefaultSleeper) Sleep() {
-	time.Sleep(1 * time.Second)
+func (s *ConfigurableSleeper) Sleep() {
+	s.sleep(s.duration)
 }
 
 type CountdownClock struct {
-	writer         io.Writer
-	sleeper        Sleeper
-	startingNumber int
+	writer  io.Writer
+	sleeper ConfigurableSleeper
 }
 
 func (c *CountdownClock) Start() {
-	for i := c.startingNumber; i > 0; i-- {
-		c.sleeper.Sleep()
+	for i := c.sleeper.iterations; i > 0; i-- {
 		fmt.Fprintln(c.writer, i)
+		c.sleeper.Sleep()
 	}
 
-	c.sleeper.Sleep()
 	fmt.Fprint(c.writer, "Go!")
 }
 
 func main() {
+	sleeper := &ConfigurableSleeper{
+		iterations: 3,
+		duration:   time.Second,
+		sleep:      time.Sleep,
+	}
 	c := CountdownClock{
-		writer:         os.Stdout,
-		sleeper:        &DefaultSleeper{},
-		startingNumber: 3,
+		writer:  os.Stdout,
+		sleeper: *sleeper,
 	}
 	c.Start()
 }
