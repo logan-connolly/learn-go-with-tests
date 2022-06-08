@@ -1,13 +1,26 @@
 package racer
 
-import "net/http"
+import (
+	"errors"
+	"net/http"
+	"time"
+)
 
-func Racer(a, b string) (winner string) {
+var ErrRacerTimeout = errors.New("Race took too long.")
+
+type RacePair struct {
+	urlOne string
+	urlTwo string
+}
+
+func Racer(rp RacePair, timeout time.Duration) (winner string, err error) {
 	select {
-	case <-ping(a):
-		return a
-	case <-ping(b):
-		return b
+	case <-ping(rp.urlOne):
+		return rp.urlOne, nil
+	case <-ping(rp.urlTwo):
+		return rp.urlTwo, nil
+	case <-time.After(timeout):
+		return "", ErrRacerTimeout
 	}
 }
 

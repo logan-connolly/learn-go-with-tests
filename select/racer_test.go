@@ -8,21 +8,44 @@ import (
 )
 
 func TestRacer(t *testing.T) {
-	slowServer := createMockServer(20 * time.Millisecond)
-	fastServer := createMockServer(1 * time.Millisecond)
+	t.Run("returns faster server", func(t *testing.T) {
+		slowServer := createMockServer(20 * time.Millisecond)
+		fastServer := createMockServer(1 * time.Millisecond)
 
-	slowURL := slowServer.URL
-	fastURL := fastServer.URL
+		defer slowServer.Close()
+		defer fastServer.Close()
 
-	want := fastURL
-	got := Racer(slowURL, fastURL)
+		rp := RacePair{slowServer.URL, fastServer.URL}
+		timeout := 30 * time.Millisecond
 
-	defer slowServer.Close()
-	defer fastServer.Close()
+		want := fastServer.URL
+		got, err := Racer(rp, timeout)
 
-	if got != want {
-		t.Errorf("got %q, want %q", got, want)
-	}
+		if err != nil {
+			t.Fatalf("did not expect to receive error, but got %v", err)
+		}
+
+		if got != want {
+			t.Errorf("got %q, want %q", got, want)
+		}
+	})
+
+	t.Run("returns error if timeout reached", func(t *testing.T) {
+		slowServer := createMockServer(11 * time.Millisecond)
+		slowerServer := createMockServer(12 * time.Millisecond)
+
+		defer slowServer.Close()
+		defer slowerServer.Close()
+
+		rp := RacePair{slowServer.URL, slowerServer.URL}
+		timeout := 10 * time.Millisecond
+
+		_, err := Racer(rp, timeout)
+
+		if err != ErrRacerTimeout {
+			t.Errorf("expected to get ErrRacerTimeout, but got %v", err)
+		}
+	})
 }
 
 func createMockServer(delay time.Duration) *httptest.Server {
