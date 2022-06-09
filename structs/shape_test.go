@@ -10,7 +10,7 @@ func TestAreas(t *testing.T) {
 	}{
 		{"Rectangle", Rectangle{Width: 10.0, Height: 5.0}, 50.0},
 		{"Circle", Circle{Radius: 10.0}, 314.1592653589793},
-		{"Triangle", Triangle{Base: 2.0, Height: 5.0}, 0.0},
+		{"Triangle", Triangle{Base: 2.0, Height: 5.0}, 5.0},
 	}
 
 	for _, test := range testCases {
