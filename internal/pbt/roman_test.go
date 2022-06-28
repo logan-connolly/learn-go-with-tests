@@ -3,6 +3,7 @@ package pbt
 import (
 	"fmt"
 	"testing"
+	"testing/quick"
 )
 
 var cases = []struct {
@@ -61,5 +62,16 @@ func TestArabicNumerals(t *testing.T) {
 				t.Errorf("got %d, want %d", got, tt.Arabic)
 			}
 		})
+	}
+}
+
+func TestPropertiesOfConversion(t *testing.T) {
+	assertion := func(arabic uint16) bool {
+		roman := ConvertToRoman(int(arabic))
+		return ConvertToArabic(roman, 0) == int(arabic)
+	}
+
+	if err := quick.Check(assertion, nil); err != nil {
+		t.Error("failed checks", err)
 	}
 }
