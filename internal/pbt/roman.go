@@ -33,3 +33,23 @@ func ConvertToRoman(arabic int) string {
 	}
 	return result.String()
 }
+
+func ConvertToArabic(roman string, count int) int {
+	if roman == "" {
+		return count
+	}
+
+	for _, numeral := range allRomanNumerals {
+		if len(numeral.Symbol) == 2 {
+			if len(roman) > 1 && roman[:2] == numeral.Symbol {
+				return ConvertToArabic(roman[2:], count+numeral.Value)
+			}
+		} else {
+			if roman[:1] == numeral.Symbol {
+				return ConvertToArabic(roman[1:], count+numeral.Value)
+			}
+		}
+	}
+
+	return -1
+}

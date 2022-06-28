@@ -41,12 +41,24 @@ var cases = []struct {
 }
 
 func TestRomanNumerals(t *testing.T) {
-	for _, test := range cases {
-		desc := fmt.Sprintf("%d gets converted to %q", test.Arabic, test.Roman)
+	for _, tt := range cases {
+		desc := fmt.Sprintf("%d gets converted to %q", tt.Arabic, tt.Roman)
 		t.Run(desc, func(t *testing.T) {
-			got := ConvertToRoman(test.Arabic)
-			if got != test.Roman {
-				t.Errorf("got %q, want %q", got, test.Roman)
+			got := ConvertToRoman(tt.Arabic)
+			if got != tt.Roman {
+				t.Errorf("got %q, want %q", got, tt.Roman)
+			}
+		})
+	}
+}
+
+func TestArabicNumerals(t *testing.T) {
+	for _, tt := range cases {
+		desc := fmt.Sprintf("%s gets converted to %d", tt.Roman, tt.Arabic)
+		t.Run(desc, func(t *testing.T) {
+			got := ConvertToArabic(tt.Roman, 0)
+			if got != tt.Arabic {
+				t.Errorf("got %d, want %d", got, tt.Arabic)
 			}
 		})
 	}
