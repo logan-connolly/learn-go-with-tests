@@ -1,7 +1,9 @@
 package hello
 
-const spanish = "Spanish"
-const french = "French"
+const (
+	spanish = "Spanish"
+	french  = "French"
+)
 
 // Say hello by passing in `name` and `language`.
 func Hello(name string, language string) string {

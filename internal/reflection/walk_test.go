@@ -16,7 +16,6 @@ type Profile struct {
 }
 
 func TestWalk(t *testing.T) {
-
 	cases := []struct {
 		Name          string
 		Input         interface{}

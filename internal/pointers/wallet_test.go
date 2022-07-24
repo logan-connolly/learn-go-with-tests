@@ -36,12 +36,14 @@ func assertBalance(t testing.TB, w Wallet, want fmt.Stringer) {
 		t.Errorf("got %s want %s", w.Balance(), want)
 	}
 }
+
 func assertNoError(t testing.TB, got error) {
 	t.Helper()
 	if got != nil {
 		t.Error("Did not expect to get an error")
 	}
 }
+
 func assertError(t testing.TB, got, want error) {
 	t.Helper()
 	if got == nil {

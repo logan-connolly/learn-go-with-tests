@@ -10,7 +10,7 @@ func Sum(numbers []int) (sum int) {
 
 // Sum an indefinite amount of slices returning a slice of sums.
 func SumAll(numbersToSum ...[]int) (sums []int) {
-	for _, numbers := range(numbersToSum) {
+	for _, numbers := range numbersToSum {
 		sums = append(sums, Sum(numbers))
 	}
 	return
@@ -18,7 +18,7 @@ func SumAll(numbersToSum ...[]int) (sums []int) {
 
 // Sum every item except the first item
 func SumAllTails(numbersToSum ...[]int) (sums []int) {
-	for _, numbers := range(numbersToSum) {
+	for _, numbers := range numbersToSum {
 		if len(numbers) == 0 {
 			sums = append(sums, 0)
 		} else {
@@ -26,5 +26,5 @@ func SumAllTails(numbersToSum ...[]int) (sums []int) {
 			sums = append(sums, Sum(tail))
 		}
 	}
-	return 
+	return
 }

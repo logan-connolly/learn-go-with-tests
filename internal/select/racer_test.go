@@ -20,7 +20,6 @@ func TestRacer(t *testing.T) {
 
 		want := fastServer.URL
 		got, err := Racer(rp, timeout)
-
 		if err != nil {
 			t.Fatalf("did not expect to receive error, but got %v", err)
 		}

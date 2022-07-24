@@ -14,7 +14,6 @@ type Store interface {
 func Server(store Store) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		data, err := store.Fetch(r.Context())
-
 		if err != nil {
 			log.Printf("got error when fetching data: '%s'", err)
 			return

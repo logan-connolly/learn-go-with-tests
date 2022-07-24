@@ -2,11 +2,12 @@ package main
 
 import "testing"
 
-var TEST_WORD = "test"
-var TEST_DEFINITION = "this is just a test"
+var (
+	TEST_WORD       = "test"
+	TEST_DEFINITION = "this is just a test"
+)
 
 func TestSearch(t *testing.T) {
-
 	t.Run("known word", func(t *testing.T) {
 		d := Dictionary{TEST_WORD: TEST_DEFINITION}
 
@@ -82,7 +83,6 @@ func assertDefinition(t *testing.T, d Dictionary, word, definition string) {
 	t.Helper()
 
 	got, err := d.Search(word)
-
 	if err != nil {
 		t.Fatal("should find added word:", err)
 	}
