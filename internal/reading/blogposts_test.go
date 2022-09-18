@@ -7,8 +7,8 @@ import (
 
 func TestNewBlogPosts(t *testing.T) {
 	fs := fstest.MapFS{
-		"hello world.md":  {Data: []byte("hi")},
-		"hello-world2.md": {Data: []byte("hola")},
+		"post-1.md": {Data: []byte("Title: Post 1")},
+		"post-2.md": {Data: []byte("Title: Post 2")},
 	}
 
 	posts, err := NewPostsFromFS(fs)
@@ -22,12 +22,12 @@ func TestNewBlogPosts(t *testing.T) {
 		}
 	})
 
-	t.Run("test file name extracted", func(t *testing.T) {
-		expected := []string{"hello world.md", "hello-world2.md"}
+	t.Run("test title extracted", func(t *testing.T) {
+		expected := []string{"Post 1", "Post 2"}
 		for idx, want := range expected {
-			got := posts[idx].name
+			got := posts[idx].Title
 			if want != got {
-				t.Errorf("got %v posts, wanted %v posts", got, want)
+				t.Errorf("got %s posts, wanted %s posts", got, want)
 			}
 		}
 	})

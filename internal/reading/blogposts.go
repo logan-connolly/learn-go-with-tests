@@ -1,9 +1,13 @@
 package main
 
-import "io/fs"
+import (
+	"io"
+	"io/fs"
+	"strings"
+)
 
 type Post struct {
-	name string
+	Title string
 }
 
 func NewPostsFromFS(fileSystem fs.FS) ([]Post, error) {
@@ -14,8 +18,20 @@ func NewPostsFromFS(fileSystem fs.FS) ([]Post, error) {
 
 	var posts []Post
 	for _, filePath := range dir {
-		posts = append(posts, Post{name: filePath.Name()})
+		file, _ := fileSystem.Open(filePath.Name())
+		post := makePostFromFile(file)
+		posts = append(posts, post)
 	}
 
 	return posts, nil
+}
+
+func makePostFromFile(file io.Reader) Post {
+	content, _ := io.ReadAll(file)
+	title := extractTitle(content)
+	return Post{Title: title}
+}
+
+func extractTitle(content []byte) string {
+	return strings.TrimPrefix(string(content), "Title: ")
 }
