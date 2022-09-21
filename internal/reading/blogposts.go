@@ -17,21 +17,36 @@ func NewPostsFromFS(fileSystem fs.FS) ([]Post, error) {
 	}
 
 	var posts []Post
+
 	for _, filePath := range dir {
-		file, _ := fileSystem.Open(filePath.Name())
-		post := makePostFromFile(file)
+		post, err := getPost(fileSystem, filePath.Name())
+		if err != nil {
+			return []Post{}, err
+		}
 		posts = append(posts, post)
 	}
 
 	return posts, nil
 }
 
-func makePostFromFile(file io.Reader) Post {
-	content, _ := io.ReadAll(file)
-	title := extractTitle(content)
-	return Post{Title: title}
+func getPost(fileSystem fs.FS, fileName string) (Post, error) {
+	file, err := fileSystem.Open(fileName)
+	if err != nil {
+		return Post{}, err
+	}
+	defer file.Close()
+	return newPost(file)
 }
 
-func extractTitle(content []byte) string {
-	return strings.TrimPrefix(string(content), "Title: ")
+func newPost(file io.Reader) (Post, error) {
+	content, err := io.ReadAll(file)
+	if err != nil {
+		return Post{}, err
+	}
+	return extractPostInfo(content), nil
+}
+
+func extractPostInfo(content []byte) Post {
+	title := strings.TrimPrefix(string(content), "Title: ")
+	return Post{title}
 }

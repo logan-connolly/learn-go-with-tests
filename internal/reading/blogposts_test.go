@@ -23,9 +23,9 @@ func TestNewBlogPosts(t *testing.T) {
 	})
 
 	t.Run("test title extracted", func(t *testing.T) {
-		expected := []string{"Post 1", "Post 2"}
+		expected := []Post{{"Post 1"}, {"Post 2"}}
 		for idx, want := range expected {
-			got := posts[idx].Title
+			got := posts[idx]
 			if want != got {
 				t.Errorf("got %s posts, wanted %s posts", got, want)
 			}
