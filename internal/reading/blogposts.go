@@ -7,6 +7,11 @@ import (
 	"strings"
 )
 
+const (
+	titleSeperator       = "Title: "
+	descriptionSeperator = "Description: "
+)
+
 type Post struct {
 	Title       string
 	Description string
@@ -51,7 +56,7 @@ func nextLine(scanner *bufio.Scanner) string {
 }
 
 func extractPostInfo(scanner *bufio.Scanner) Post {
-	title := strings.TrimPrefix(nextLine(scanner), "Title: ")
-	description := strings.TrimPrefix(nextLine(scanner), "Description: ")
+	title := strings.TrimPrefix(nextLine(scanner), titleSeperator)
+	description := strings.TrimPrefix(nextLine(scanner), descriptionSeperator)
 	return Post{title, description}
 }

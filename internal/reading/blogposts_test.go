@@ -38,7 +38,10 @@ Description: Description 2`
 	})
 
 	t.Run("test title extracted", func(t *testing.T) {
-		expected := []Post{{"Post 1", "Description 1"}, {"Post 2", "Description 2"}}
+		expected := []Post{
+			{"Post 1", "Description 1"},
+			{"Post 2", "Description 2"},
+		}
 		for idx, want := range expected {
 			got := posts[idx]
 			assertPost(t, got, want)
