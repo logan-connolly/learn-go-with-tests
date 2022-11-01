@@ -49,18 +49,15 @@ func getPost(fileSystem fs.FS, fileName string) (Post, error) {
 
 func newPost(file io.Reader) (Post, error) {
 	scanner := bufio.NewScanner(file)
-	return extractPostInfo(scanner), nil
-}
 
-func parseLine(scanner *bufio.Scanner, seperator string) string {
-	scanner.Scan()
-	return strings.TrimPrefix(scanner.Text(), seperator)
-}
-
-func extractPostInfo(scanner *bufio.Scanner) Post {
-	return Post{
-		Title:       parseLine(scanner, titleSeperator),
-		Description: parseLine(scanner, descriptionSeperator),
-		Tags:        strings.Split(parseLine(scanner, tagsSeperator), ", "),
+	parseLine := func(seperator string) string {
+		scanner.Scan()
+		return strings.TrimPrefix(scanner.Text(), seperator)
 	}
+
+	return Post{
+		Title:       parseLine(titleSeperator),
+		Description: parseLine(descriptionSeperator),
+		Tags:        strings.Split(parseLine(tagsSeperator), ", "),
+	}, nil
 }
