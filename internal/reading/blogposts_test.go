@@ -16,9 +16,11 @@ func assertPost(t *testing.T, got, want Post) {
 func TestNewBlogPosts(t *testing.T) {
 	const (
 		postOne = `Title: Post 1
-Description: Description 1`
+Description: Description 1
+Tags: tdd, go`
 		postTwo = `Title: Post 2
-Description: Description 2`
+Description: Description 2
+Tags: rust, borrow-checker`
 	)
 
 	fs := fstest.MapFS{
@@ -39,8 +41,8 @@ Description: Description 2`
 
 	t.Run("test title extracted", func(t *testing.T) {
 		expected := []Post{
-			{"Post 1", "Description 1"},
-			{"Post 2", "Description 2"},
+			{"Post 1", "Description 1", []string{"tdd", "go"}},
+			{"Post 2", "Description 2", []string{"rust", "borrow-checker"}},
 		}
 		for idx, want := range expected {
 			got := posts[idx]

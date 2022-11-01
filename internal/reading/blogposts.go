@@ -10,11 +10,13 @@ import (
 const (
 	titleSeperator       = "Title: "
 	descriptionSeperator = "Description: "
+	tagsSeperator        = "Tags: "
 )
 
 type Post struct {
 	Title       string
 	Description string
+	Tags        []string
 }
 
 func NewPostsFromFS(fileSystem fs.FS) ([]Post, error) {
@@ -56,7 +58,9 @@ func parseLine(scanner *bufio.Scanner, seperator string) string {
 }
 
 func extractPostInfo(scanner *bufio.Scanner) Post {
-	title := parseLine(scanner, titleSeperator)
-	description := parseLine(scanner, descriptionSeperator)
-	return Post{title, description}
+	return Post{
+		Title:       parseLine(scanner, titleSeperator),
+		Description: parseLine(scanner, descriptionSeperator),
+		Tags:        strings.Split(parseLine(scanner, tagsSeperator), ", "),
+	}
 }
