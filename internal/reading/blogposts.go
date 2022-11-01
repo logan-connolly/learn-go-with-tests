@@ -50,13 +50,13 @@ func newPost(file io.Reader) (Post, error) {
 	return extractPostInfo(scanner), nil
 }
 
-func nextLine(scanner *bufio.Scanner) string {
+func parseLine(scanner *bufio.Scanner, seperator string) string {
 	scanner.Scan()
-	return scanner.Text()
+	return strings.TrimPrefix(scanner.Text(), seperator)
 }
 
 func extractPostInfo(scanner *bufio.Scanner) Post {
-	title := strings.TrimPrefix(nextLine(scanner), titleSeperator)
-	description := strings.TrimPrefix(nextLine(scanner), descriptionSeperator)
+	title := parseLine(scanner, titleSeperator)
+	description := parseLine(scanner, descriptionSeperator)
 	return Post{title, description}
 }
