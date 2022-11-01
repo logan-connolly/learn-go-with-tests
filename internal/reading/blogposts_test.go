@@ -1,14 +1,29 @@
 package main
 
 import (
+	"reflect"
 	"testing"
 	"testing/fstest"
 )
 
+func assertPost(t *testing.T, got, want Post) {
+	t.Helper()
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("Expected %v got %v", want, got)
+	}
+}
+
 func TestNewBlogPosts(t *testing.T) {
+	const (
+		postOne = `Title: Post 1
+Description: Description 1`
+		postTwo = `Title: Post 2
+Description: Description 2`
+	)
+
 	fs := fstest.MapFS{
-		"post-1.md": {Data: []byte("Title: Post 1")},
-		"post-2.md": {Data: []byte("Title: Post 2")},
+		"post-1.md": {Data: []byte(postOne)},
+		"post-2.md": {Data: []byte(postTwo)},
 	}
 
 	posts, err := NewPostsFromFS(fs)
@@ -23,12 +38,10 @@ func TestNewBlogPosts(t *testing.T) {
 	})
 
 	t.Run("test title extracted", func(t *testing.T) {
-		expected := []Post{{"Post 1"}, {"Post 2"}}
+		expected := []Post{{"Post 1", "Description 1"}, {"Post 2", "Description 2"}}
 		for idx, want := range expected {
 			got := posts[idx]
-			if want != got {
-				t.Errorf("got %s posts, wanted %s posts", got, want)
-			}
+			assertPost(t, got, want)
 		}
 	})
 }

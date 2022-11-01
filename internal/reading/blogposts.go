@@ -1,13 +1,15 @@
 package main
 
 import (
+	"bufio"
 	"io"
 	"io/fs"
 	"strings"
 )
 
 type Post struct {
-	Title string
+	Title       string
+	Description string
 }
 
 func NewPostsFromFS(fileSystem fs.FS) ([]Post, error) {
@@ -39,14 +41,17 @@ func getPost(fileSystem fs.FS, fileName string) (Post, error) {
 }
 
 func newPost(file io.Reader) (Post, error) {
-	content, err := io.ReadAll(file)
-	if err != nil {
-		return Post{}, err
-	}
-	return extractPostInfo(content), nil
+	scanner := bufio.NewScanner(file)
+	return extractPostInfo(scanner), nil
 }
 
-func extractPostInfo(content []byte) Post {
-	title := strings.TrimPrefix(string(content), "Title: ")
-	return Post{title}
+func nextLine(scanner *bufio.Scanner) string {
+	scanner.Scan()
+	return scanner.Text()
+}
+
+func extractPostInfo(scanner *bufio.Scanner) Post {
+	title := strings.TrimPrefix(nextLine(scanner), "Title: ")
+	description := strings.TrimPrefix(nextLine(scanner), "Description: ")
+	return Post{title, description}
 }
