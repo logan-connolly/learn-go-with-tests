@@ -2,7 +2,8 @@ package main
 
 import (
 	"bufio"
-	"io"
+	"bytes"
+	"fmt"
 	"io/fs"
 	"strings"
 )
@@ -17,6 +18,7 @@ type Post struct {
 	Title       string
 	Description string
 	Tags        []string
+	Body        string
 }
 
 func NewPostsFromFS(fileSystem fs.FS) ([]Post, error) {
@@ -26,7 +28,6 @@ func NewPostsFromFS(fileSystem fs.FS) ([]Post, error) {
 	}
 
 	var posts []Post
-
 	for _, filePath := range dir {
 		post, err := getPost(fileSystem, filePath.Name())
 		if err != nil {
@@ -44,20 +45,29 @@ func getPost(fileSystem fs.FS, fileName string) (Post, error) {
 		return Post{}, err
 	}
 	defer file.Close()
-	return newPost(file)
+	return newPost(bufio.NewScanner(file))
 }
 
-func newPost(file io.Reader) (Post, error) {
-	scanner := bufio.NewScanner(file)
+func parseLine(scanner *bufio.Scanner, seperator string) string {
+	scanner.Scan()
+	return strings.TrimPrefix(scanner.Text(), seperator)
+}
 
-	parseLine := func(seperator string) string {
-		scanner.Scan()
-		return strings.TrimPrefix(scanner.Text(), seperator)
+func parseBody(scanner *bufio.Scanner) string {
+	scanner.Scan()
+	buf := bytes.Buffer{}
+	for scanner.Scan() {
+		fmt.Fprintln(&buf, scanner.Text())
 	}
+	return strings.TrimSuffix(buf.String(), "\n")
+}
 
-	return Post{
-		Title:       parseLine(titleSeperator),
-		Description: parseLine(descriptionSeperator),
-		Tags:        strings.Split(parseLine(tagsSeperator), ", "),
-	}, nil
+func newPost(scanner *bufio.Scanner) (Post, error) {
+	post := Post{
+		Title:       parseLine(scanner, titleSeperator),
+		Description: parseLine(scanner, descriptionSeperator),
+		Tags:        strings.Split(parseLine(scanner, tagsSeperator), ", "),
+		Body:        parseBody(scanner),
+	}
+	return post, nil
 }
