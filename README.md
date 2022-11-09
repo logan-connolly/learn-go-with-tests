@@ -22,7 +22,7 @@ Code exercises from [@quii](https://github.com/quii)'s GitBook [Learn Go with te
 - [x] Context: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/context), [solution](./internal/context)]
 - [x] Property based tests: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/roman-numerals), [solution](./internal/pbt)]
 - [ ] Maths: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/math)]
-- [ ] Reading files: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/reading-files)]
+- [x] Reading files: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/reading-files), [solution](./internal/reading)]
 - [ ] Templating: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/html-templates)]
 - [ ] Generics: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/generics)]
 - [ ] Revisiting arrays and slices with generics: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/revisiting-arrays-and-slices-with-generics)]
