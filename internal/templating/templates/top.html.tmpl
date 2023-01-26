@@ -1,4 +1,4 @@
-
+{{define "top"}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,20 +18,4 @@
     </div>
 </nav>
 <main>
-
-<h1>hello world</h1>
-
-<p>This is a description</p>
-
-Tags: <ul><li>go</li><li>tdd</li></ul>
-
-</main>
-<footer>
-    <ul>
-        <li><a href="https://twitter.com/quii">Twitter</a></li>
-        <li><a href="https://github.com/quii">GitHub</a></li>
-    </ul>
-</footer>
-</body>
-</html>
-
+{{end}}
