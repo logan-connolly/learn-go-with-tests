@@ -19,11 +19,14 @@
 </nav>
 <main>
 
-<h1>hello world</h1>
-
-<p>This is a description</p>
-
-Tags: <ul><li>go</li><li>tdd</li></ul>
+<header>
+	<h1>hello world</h1>
+	<p>This is a description</p>
+	Tags: <ul><li>go</li><li>tdd</li></ul>
+</header>
+<article>
+	This is a post
+</article>
 
 </main>
 <footer>
