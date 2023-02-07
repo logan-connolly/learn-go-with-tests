@@ -1,0 +1,9 @@
+{{template "top" .}}
+<ol>
+{{ range . }}
+	<li>
+		<a href="/post/{{ .SanitizeTitle }}">{{ .Title }}</a>
+	</li>
+{{ end }}
+</ol>
+{{template "bottom" .}}

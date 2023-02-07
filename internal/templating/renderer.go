@@ -34,6 +34,10 @@ func (pr *PostRenderer) Render(w io.Writer, p Post) error {
 	return pr.tmpl.ExecuteTemplate(w, "blog.html.tmpl", pvm)
 }
 
+func (pr *PostRenderer) RenderIndex(w io.Writer, posts []Post) error {
+	return pr.tmpl.ExecuteTemplate(w, "index.html.tmpl", posts)
+}
+
 type postViewModel struct {
 	Post     Post
 	HtmlBody template.HTML
