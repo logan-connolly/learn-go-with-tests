@@ -23,6 +23,6 @@ Code exercises from [@quii](https://github.com/quii)'s GitBook [Learn Go with te
 - [x] Property based tests: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/roman-numerals), [solution](./internal/pbt)]
 - [ ] Maths: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/math)]
 - [x] Reading files: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/reading-files), [solution](./internal/reading)]
-- [ ] Templating: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/html-templates)]
+- [x] Templating: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/html-templates), [solution](./internal/templating)]
 - [ ] Generics: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/generics)]
 - [ ] Revisiting arrays and slices with generics: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/revisiting-arrays-and-slices-with-generics)]
