@@ -4,13 +4,17 @@ import (
 	"embed"
 	"html/template"
 	"io"
+
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/parser"
 )
 
 //go:embed "templates/*"
 var blogTemplates embed.FS
 
 type PostRenderer struct {
-	tmpl *template.Template
+	tmpl     *template.Template
+	mdParser *parser.Parser
 }
 
 func NewPostRenderer() (*PostRenderer, error) {
@@ -19,13 +23,23 @@ func NewPostRenderer() (*PostRenderer, error) {
 		return nil, err
 	}
 
-	return &PostRenderer{tmpl}, nil
+	extensions := parser.CommonExtensions | parser.AutoHeadingIDs
+	parser := parser.NewWithExtensions(extensions)
+
+	return &PostRenderer{tmpl, parser}, nil
 }
 
 func (pr *PostRenderer) Render(w io.Writer, p Post) error {
-	if err := pr.tmpl.Execute(w, p); err != nil {
-		return err
-	}
+	pvm := newPostViewModel(p, pr)
+	return pr.tmpl.ExecuteTemplate(w, "blog.html.tmpl", pvm)
+}
 
-	return nil
+type postViewModel struct {
+	Post     Post
+	HtmlBody template.HTML
+}
+
+func newPostViewModel(p Post, pr *PostRenderer) postViewModel {
+	htmlBody := markdown.ToHTML([]byte(p.Body), pr.mdParser, nil)
+	return postViewModel{p, template.HTML(htmlBody)}
 }

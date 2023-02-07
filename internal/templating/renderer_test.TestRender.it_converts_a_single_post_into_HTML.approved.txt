@@ -25,7 +25,8 @@
 	Tags: <ul><li>go</li><li>tdd</li></ul>
 </header>
 <article>
-	This is a post
+	<p><strong>This</strong> is a <em>great</em> post.</p>
+
 </article>
 
 </main>

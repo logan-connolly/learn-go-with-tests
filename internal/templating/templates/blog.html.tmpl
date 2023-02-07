@@ -1,10 +1,10 @@
 {{template "top" .}}
 <header>
-	<h1>{{.Title}}</h1>
-	<p>{{.Description}}</p>
-	Tags: <ul>{{range .Tags}}<li>{{.}}</li>{{end}}</ul>
+	<h1>{{.Post.Title}}</h1>
+	<p>{{.Post.Description}}</p>
+	Tags: <ul>{{range .Post.Tags}}<li>{{.}}</li>{{end}}</ul>
 </header>
 <article>
-	{{ .Body }}
+	{{ .HtmlBody  }}
 </article>
 {{template "bottom" .}}
