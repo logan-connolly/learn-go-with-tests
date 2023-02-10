@@ -5,9 +5,9 @@ func IsEven(n int) bool {
 }
 
 // Find an item in a slice based on a predicate.
-func Find[T any](items []T, pred func(T) bool) (val T, ok bool) {
+func Find[T any](items []T, predicate func(T) bool) (value T, found bool) {
 	for _, item := range items {
-		if pred(item) {
+		if predicate(item) {
 			return item, true
 		}
 	}
