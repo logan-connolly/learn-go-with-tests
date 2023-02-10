@@ -25,4 +25,4 @@ Code exercises from [@quii](https://github.com/quii)'s GitBook [Learn Go with te
 - [x] Reading files: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/reading-files), [solution](./internal/reading)]
 - [x] Templating: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/html-templates), [solution](./internal/templating)]
 - [x] Generics: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/generics), [solution](./internal/generics)]
-- [ ] Revisiting arrays and slices with generics: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/revisiting-arrays-and-slices-with-generics)]
+- [x] Revisiting arrays and slices with generics: [[chapter](https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/revisiting-arrays-and-slices-with-generics), [solution](./internal/generics)]
