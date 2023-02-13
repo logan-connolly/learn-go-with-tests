@@ -2,6 +2,8 @@ package generics
 
 import (
 	"testing"
+
+	"github.com/logan-connolly/learn-go-with-tests/internal/utils"
 )
 
 func TestFind(t *testing.T) {
@@ -10,8 +12,8 @@ func TestFind(t *testing.T) {
 
 		val, found := Find(items, IsEven)
 
-		AssertEqual(t, val, 2)
-		AssertEqual(t, found, true)
+		utils.AssertEqual(t, val, 2)
+		utils.AssertEqual(t, found, true)
 	})
 
 	t.Run("no even number found", func(t *testing.T) {
@@ -19,7 +21,7 @@ func TestFind(t *testing.T) {
 
 		val, found := Find(items, IsEven)
 
-		AssertEqual(t, val, 0)
-		AssertEqual(t, found, false)
+		utils.AssertEqual(t, val, 0)
+		utils.AssertEqual(t, found, false)
 	})
 }

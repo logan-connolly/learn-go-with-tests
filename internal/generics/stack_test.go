@@ -2,13 +2,15 @@ package generics
 
 import (
 	"testing"
+
+	"github.com/logan-connolly/learn-go-with-tests/internal/utils"
 )
 
 func TestStack(t *testing.T) {
 	t.Run("initiated stack is empty", func(t *testing.T) {
 		s := new(Stack[int])
 
-		AssertEqual(t, s.IsEmpty(), true)
+		utils.AssertEqual(t, s.IsEmpty(), true)
 	})
 
 	t.Run("integer: empty stack return 'zero' value", func(t *testing.T) {
@@ -16,8 +18,8 @@ func TestStack(t *testing.T) {
 
 		got, ok := s.Pop()
 
-		AssertEqual(t, ok, false)
-		AssertEqual(t, got, 0)
+		utils.AssertEqual(t, ok, false)
+		utils.AssertEqual(t, got, 0)
 	})
 
 	t.Run("string: empty stack return 'zero' value", func(t *testing.T) {
@@ -25,8 +27,8 @@ func TestStack(t *testing.T) {
 
 		got, ok := s.Pop()
 
-		AssertEqual(t, ok, false)
-		AssertEqual(t, got, "")
+		utils.AssertEqual(t, ok, false)
+		utils.AssertEqual(t, got, "")
 	})
 
 	t.Run("stack returns last value", func(t *testing.T) {
@@ -36,14 +38,7 @@ func TestStack(t *testing.T) {
 
 		got, ok := s.Pop()
 
-		AssertEqual(t, ok, true)
-		AssertEqual(t, got, 3)
+		utils.AssertEqual(t, ok, true)
+		utils.AssertEqual(t, got, 3)
 	})
-}
-
-func AssertEqual[T comparable](t *testing.T, got, want T) {
-	t.Helper()
-	if got != want {
-		t.Errorf("got %v, want %v", got, want)
-	}
 }
